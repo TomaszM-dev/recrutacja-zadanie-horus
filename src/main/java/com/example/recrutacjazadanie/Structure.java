@@ -1,0 +1,19 @@
+package com.example.recrutacjazadanie;
+
+import org.springframework.cglib.core.Block;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface Structure {
+
+    // zwraca dowolny element o podanym kolorze
+    Optional<Block>findBlockByColor(String color);
+
+    // zwraca wszystkie elementy z danego materiału
+    List<Block> findBlocksByMeterial(String material);
+
+    //zwraca liczbę wszystkich elementów tworzących strukturę
+    int count();
+
+}
