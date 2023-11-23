@@ -1,13 +1,12 @@
 package com.example.recrutacjazadanie;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class RecrutacjaZadanieApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RecrutacjaZadanieApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RecrutacjaZadanieApplication.class, args);
+    }
 
 }
