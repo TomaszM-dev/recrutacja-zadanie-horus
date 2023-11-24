@@ -7,6 +7,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class WallFindByMaterialTest {
 
@@ -14,8 +16,16 @@ public class WallFindByMaterialTest {
     void shouldReturnEmptyCollectionWhenPassedMaterialIsNull() {
         // given
         List<Block> blocks = new ArrayList<>();
-        blocks.add(new SpecificBlock("black", "ytong"));
-        blocks.add(new SpecificBlock("white", "sth"));
+        Block mockBlock1 = mock(Block.class);
+        when(mockBlock1.getColor()).thenReturn("black");
+        when(mockBlock1.getMaterial()).thenReturn("silk");
+
+        Block mockBlock2 = mock(Block.class);
+        when(mockBlock2.getColor()).thenReturn("white");
+        when(mockBlock2.getMaterial()).thenReturn("wood");
+
+        blocks.add(mockBlock1);
+        blocks.add(mockBlock2);
         Wall wall = new Wall(blocks);
 
         // when
@@ -33,7 +43,7 @@ public class WallFindByMaterialTest {
         Wall wall = new Wall(blocks);
 
         // when
-        List<Block> result = wall.findBlocksByMaterial("sth");
+        List<Block> result = wall.findBlocksByMaterial("silk");
 
         // then
         assertTrue(result.isEmpty());
@@ -43,12 +53,19 @@ public class WallFindByMaterialTest {
     public void shouldFindSpecificBlockByMaterial() {
 
         // given
-        String material = "ysof";
-        SpecificBlock expectedBlock = new SpecificBlock("white",material);
+        String material = "silk";
         List<Block> blocks = new ArrayList<>();
+
+        Block expectedBlock = mock(Block.class);
+        when(expectedBlock.getColor()).thenReturn("white");
+        when(expectedBlock.getMaterial()).thenReturn(material);
+
+        Block mockBlock = mock(Block.class);
+        when(mockBlock.getColor()).thenReturn("pink");
+        when(mockBlock.getMaterial()).thenReturn("wood");
+
         blocks.add(expectedBlock);
-        blocks.add(new SpecificBlock("black", "tarr"));
-        blocks.add(new SpecificBlock("white", "essa"));
+        blocks.add(mockBlock);
         Wall wall = new Wall(blocks);
 
         // when
@@ -62,11 +79,20 @@ public class WallFindByMaterialTest {
     @Test
     public void shouldReturnEmptyListWhenPassedSpecificMaterialCantBeFound() {
         // given
-        String material = "ez";
+        String material = "silk";
 
         List<Block> blocks = new ArrayList<>();
-        blocks.add(new SpecificBlock("orange", "tarr"));
-        blocks.add(new SpecificBlock("white", "ysof"));
+
+        Block expectedBlock = mock(Block.class);
+        when(expectedBlock.getColor()).thenReturn("white");
+        when(expectedBlock.getMaterial()).thenReturn("metal");
+
+        Block mockBlock = mock(Block.class);
+        when(mockBlock.getColor()).thenReturn("pink");
+        when(mockBlock.getMaterial()).thenReturn("wood");
+
+        blocks.add(expectedBlock);
+        blocks.add(mockBlock);
         Wall wall = new Wall(blocks);
 
         // when
@@ -75,6 +101,4 @@ public class WallFindByMaterialTest {
         // then
         assertTrue(result.isEmpty());
     }
-
-
 }

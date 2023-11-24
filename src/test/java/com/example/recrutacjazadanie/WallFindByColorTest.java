@@ -83,8 +83,16 @@ class WallFindByColorTest {
         String color = "pink";
 
         List<Block> blocks = new ArrayList<>();
-        blocks.add(new SpecificBlock("orange", "tarr"));
-        blocks.add(new SpecificBlock("white", "ysof"));
+        Block mockBlock1 = mock(Block.class);
+        when(mockBlock1.getColor()).thenReturn("black");
+        when(mockBlock1.getMaterial()).thenReturn("silk");
+
+        Block mockBlock2 = mock(Block.class);
+        when(mockBlock2.getColor()).thenReturn("white");
+        when(mockBlock2.getMaterial()).thenReturn("wood");
+
+        blocks.add(mockBlock1);
+        blocks.add(mockBlock2);
         Wall wall = new Wall(blocks);
 
         // when
