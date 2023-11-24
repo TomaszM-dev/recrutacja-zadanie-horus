@@ -4,13 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
 
-class WallTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class WallFindByMaterialTest {
 
     @Test
-    void shouldReturnEmptyOptionalWhenPassedColorIsNull() {
+    void shouldReturnEmptyCollectionWhenPassedMaterialIsNull() {
         // given
         List<Block> blocks = new ArrayList<>();
         blocks.add(new SpecificBlock("black", "ytong"));
@@ -18,7 +19,7 @@ class WallTest {
         Wall wall = new Wall(blocks);
 
         // when
-        Optional<Block> result = wall.findBlockByColor(null);
+        List<Block> result = wall.findBlocksByMaterial(null);
 
         // then
         assertTrue(result.isEmpty());
@@ -32,35 +33,36 @@ class WallTest {
         Wall wall = new Wall(blocks);
 
         // when
-        Optional<Block> result = wall.findBlockByColor("white");
+        List<Block> result = wall.findBlocksByMaterial("sth");
 
         // then
         assertTrue(result.isEmpty());
     }
 
     @Test
-    public void shouldFindSpecificBlockByColor() {
+    public void shouldFindSpecificBlockByMaterial() {
 
         // given
-        String color = "black";
-        SpecificBlock expectedBlock = new SpecificBlock(color,"yton");
+        String material = "ysof";
+        SpecificBlock expectedBlock = new SpecificBlock("white",material);
         List<Block> blocks = new ArrayList<>();
         blocks.add(expectedBlock);
         blocks.add(new SpecificBlock("black", "tarr"));
-        blocks.add(new SpecificBlock("white", "ysof"));
+        blocks.add(new SpecificBlock("white", "essa"));
         Wall wall = new Wall(blocks);
 
         // when
-        Optional<Block> result = wall.findBlockByColor(color);
+        List<Block> result = wall.findBlocksByMaterial(material);
 
         // then
-        assertEquals(result.get(), expectedBlock);
+        assertTrue(result.contains(expectedBlock));
     }
 
+
     @Test
-    public void shouldReturnEmptyOptionalWhenPassedSpecificColorCantBeFound() {
+    public void shouldReturnEmptyListWhenPassedSpecificMaterialCantBeFound() {
         // given
-        String color = "pink";
+        String material = "ez";
 
         List<Block> blocks = new ArrayList<>();
         blocks.add(new SpecificBlock("orange", "tarr"));
@@ -68,12 +70,11 @@ class WallTest {
         Wall wall = new Wall(blocks);
 
         // when
-        Optional<Block> result = wall.findBlockByColor(color);
+        List<Block> result = wall.findBlocksByMaterial(material);
 
         // then
         assertTrue(result.isEmpty());
     }
-
 
 
 }

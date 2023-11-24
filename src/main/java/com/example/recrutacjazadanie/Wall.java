@@ -1,9 +1,10 @@
 package com.example.recrutacjazadanie;
 
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static io.micrometer.common.util.StringUtils.isNotBlank;
 
 public class Wall implements Structure {
 
@@ -16,25 +17,43 @@ public class Wall implements Structure {
     @Override
     public Optional<Block> findBlockByColor(String color) {
 
-        // Stop execution when color is null
         if (color == null) {
             return Optional.empty();
         }
 
         return blocks.stream()
                 .filter(Objects::nonNull)
-                // checking if color is  equal to color of a specific block
                 .filter(block -> color.equals(block.getColor()))
-                .findFirst();
+                .findAny();
     }
 
     @Override
     public List<Block> findBlocksByMaterial(String material) {
-        return null;
+
+        if (material == null) {
+            return Collections.EMPTY_LIST;
+        }
+
+        List<Block> result = new ArrayList<>();
+        for (Block block : blocks) {
+            if (block != null && material.equals(block.getMaterial())) {
+                result.add(block);
+            }
+        }
+        return result;
     }
 
     @Override
     public int count() {
-        return 0;
+        List<Block> result = new ArrayList<>();
+
+        for (Block block : blocks) {
+            if (block.getColor() != null && isNotBlank(block.getColor()) && block.getMaterial() != null && isNotBlank(block.getMaterial())) {
+                result.add(block);
+            }
+        }
+        return result.size();
+
+
     }
 }

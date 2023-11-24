@@ -1,5 +1,7 @@
 package com.example.recrutacjazadanie;
 
+import java.util.List;
+
 public class SpecificBlock implements Block {
     private final String color;
     private final String material;
@@ -26,4 +28,6 @@ public class SpecificBlock implements Block {
                 ", material='" + material + '\'' +
                 '}';
     }
+
+
 }
