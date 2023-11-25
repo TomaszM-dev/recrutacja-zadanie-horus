@@ -1,15 +1,8 @@
 package com.example.recrutacjazadanie;
-
-
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static io.micrometer.common.util.StringUtils.isNotBlank;
 
 public class Wall implements Structure {
-
     private List<Block> blocks;
-
     public Wall(List<Block> blocks) {
         this.blocks = blocks;
     }
@@ -20,18 +13,17 @@ public class Wall implements Structure {
         if (color == null) {
             return Optional.empty();
         }
-
         return blocks.stream()
                 .filter(Objects::nonNull)
                 .filter(block -> color.equals(block.getColor()))
-                .findAny();
+                .findFirst();
     }
 
     @Override
     public List<Block> findBlocksByMaterial(String material) {
 
         if (material == null) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
 
         List<Block> result = new ArrayList<>();
@@ -45,15 +37,15 @@ public class Wall implements Structure {
 
     @Override
     public int count() {
-        List<Block> result = new ArrayList<>();
+        int count = 0;
 
         for (Block block : blocks) {
-            if (block.getColor() != null && isNotBlank(block.getColor()) && block.getMaterial() != null && isNotBlank(block.getMaterial())) {
-                result.add(block);
+            if (block instanceof CompositeBlock) {
+                count += ((CompositeBlock) block).getBlocks().size();
+            } else if (block != null) {
+                count++;
             }
         }
-        return result.size();
-
-
+        return count;
     }
 }
