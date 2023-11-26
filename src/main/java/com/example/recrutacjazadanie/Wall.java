@@ -2,14 +2,13 @@ package com.example.recrutacjazadanie;
 import java.util.*;
 
 public class Wall implements Structure {
-    private List<Block> blocks;
+    private  List<Block> blocks = new ArrayList();
     public Wall(List<Block> blocks) {
         this.blocks = blocks;
     }
 
     @Override
     public Optional<Block> findBlockByColor(String color) {
-
         if (color == null) {
             return Optional.empty();
         }
@@ -21,7 +20,6 @@ public class Wall implements Structure {
 
     @Override
     public List<Block> findBlocksByMaterial(String material) {
-
         if (material == null) {
             return Collections.emptyList();
         }
@@ -38,11 +36,13 @@ public class Wall implements Structure {
     @Override
     public int count() {
         int count = 0;
-
         for (Block block : blocks) {
-            if (block instanceof CompositeBlock) {
-                count += ((CompositeBlock) block).getBlocks().size();
-            } else if (block != null) {
+            if (block != null) {
+                if (block instanceof CompositeBlock) {
+                    List<Block> compositeBlocks = ((CompositeBlock) block).getBlocks();
+                    count += compositeBlocks != null ? compositeBlocks.size() : 0;
+                    continue;
+                }
                 count++;
             }
         }
